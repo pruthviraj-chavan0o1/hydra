@@ -3,23 +3,10 @@ package com.pruthviraj.hydra.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class SecurityConfig {
-
-    @Bean
-    public InMemoryUserDetailsManager users() {
-
-        var admin = User.withUsername("admin")
-                .password("{noop}hydra123")
-                .roles("ADMIN")
-                .build();
-
-        return new InMemoryUserDetailsManager(admin);
-    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http)
