@@ -1,4 +1,5 @@
 package com.pruthviraj.hydra.controller;
+import java.util.List;
 
 import com.pruthviraj.hydra.model.User;
 import com.pruthviraj.hydra.repository.UserRepository;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
 import java.util.Optional;
+
 
 @RestController
 public class HydraController {
@@ -24,6 +26,10 @@ public class HydraController {
     public String status() {
         return "HYDRA backend is working successfully!";
     }
+    @GetMapping("/api/admin/users")
+public List<User> getAllUsers() {
+    return userRepository.findAll();
+}
 
     @PostMapping("/api/register")
     public String register(@RequestBody Map<String, String> registerData) {

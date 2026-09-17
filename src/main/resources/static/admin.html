@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Hydra Admin Panel</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            background: #080d18;
+            color: white;
+        }
+
+        header {
+            background: #101827;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+
+        header h1 {
+            color: #00ffcc;
+            margin: 0;
+        }
+
+        header a {
+            color: #00ffcc;
+            text-decoration: none;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            padding: 30px 20px;
+        }
+
+        .title {
+            color: #00ffcc;
+        }
+
+        .stats {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin: 25px 0;
+        }
+
+        .stat-card {
+            background: #101827;
+            border: 1px solid #00ffcc33;
+            border-radius: 12px;
+            padding: 25px;
+            min-width: 220px;
+        }
+
+        .stat-card h2 {
+            color: #00ffcc;
+            font-size: 35px;
+            margin: 10px 0;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            background: #101827;
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 500px;
+        }
+
+        th,
+        td {
+            padding: 14px;
+            border-bottom: 1px solid #34445b;
+            text-align: left;
+        }
+
+        th {
+            color: #00ffcc;
+        }
+
+        .message {
+            margin-top: 20px;
+            color: #ffd166;
+        }
+
+        button {
+            padding: 10px 18px;
+            border: none;
+            border-radius: 6px;
+            background: #00ffcc;
+            color: #080d18;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: white;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>HYDRA ADMIN</h1>
+
+    <a href="dashboard.html">
+        Back to Dashboard
+    </a>
+</header>
+
+<div class="container">
+
+    <h2 class="title">Admin Dashboard</h2>
+
+    <div class="stats">
+
+        <div class="stat-card">
+            <p>Total Registered Users</p>
+            <h2 id="totalUsers">0</h2>
+        </div>
+
+    </div>
+
+    <button onclick="loadUsers()">
+        Refresh Users
+    </button>
+
+    <div class="table-container" style="margin-top: 25px;">
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+
+            <tbody id="usersTable">
+                <tr>
+                    <td colspan="3">Loading users...</td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+    <div id="message" class="message"></div>
+
+</div>
+
+<script>
+    async function loadUsers() {
+
+        const table = document.getElementById("usersTable");
+        const totalUsers = document.getElementById("totalUsers");
+        const message = document.getElementById("message");
+
+        table.innerHTML = `
+            <tr>
+                <td colspan="3">Loading...</td>
+            </tr>
+        `;
+
+        try {
+
+            const response = await fetch("/api/admin/users");
+
+            if (!response.ok) {
+                throw new Error("Unable to load users");
+            }
+
+            const users = await response.json();
+
+            totalUsers.textContent = users.length;
+
+            table.innerHTML = "";
+
+            if (users.length === 0) {
+
+                table.innerHTML = `
+                    <tr>
+                        <td colspan="3">No users registered yet.</td>
+                    </tr>
+                `;
+
+                return;
+            }
+
+            users.forEach(function(user) {
+
+                const row = document.createElement("tr");
+
+                row.innerHTML = `
+                    <td>${user.id}</td>
+                    <td>${user.username}</td>
+                    <td>${user.email}</td>
+                `;
+
+                table.appendChild(row);
+            });
+
+            message.textContent = "Users loaded successfully.";
+
+        } catch (error) {
+
+            table.innerHTML = `
+                <tr>
+                    <td colspan="3">Unable to load users.</td>
+                </tr>
+            `;
+
+            message.textContent =
+                "Please make sure the Hydra backend is running.";
+        }
+    }
+
+    loadUsers();
+</script>
+
+</body>
+</html>
