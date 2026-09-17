@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Hydra Dashboard</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #0b1020;
+            color: white;
+        }
+
+        header {
+            background: #151d35;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        h1 {
+            color: #00ffcc;
+        }
+
+        button {
+            background: #ff3b3b;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .container {
+            padding: 30px;
+        }
+
+        .cards {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            background: #151d35;
+            padding: 25px;
+            border-radius: 12px;
+            width: 220px;
+            box-shadow: 0 0 10px #000;
+        }
+
+        .card h2 {
+            color: #00ffcc;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>HYDRA</h1>
+
+    <button onclick="logout()">Logout</button>
+</header>
+
+<div class="container">
+
+    <h2>Welcome to Hydra Dashboard 👋</h2>
+
+    <p>You have successfully logged in.</p>
+
+    <div class="cards">
+
+        <div class="card">
+    <h2>Profile</h2>
+    <p>View your account details.</p>
+
+    <a href="profile.html" style="color:#00ffcc;">
+        Open Profile
+    </a>
+</div>
+
+        <div class="card">
+    <h2>Practice Lab</h2>
+
+    <p>Learn cybersecurity safely in a local environment.</p>
+
+    <a href="lab.html" style="color:#00ffcc;">
+        Open Security Lab
+    </a>
+</div>
+
+        <div class="card">
+            <h2>Security Tips</h2>
+            <p>Learn about passwords, phishing and online safety.</p>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+    function logout() {
+        window.location.href = "login.html";
+    }
+</script>
+
+</body>
+</html>

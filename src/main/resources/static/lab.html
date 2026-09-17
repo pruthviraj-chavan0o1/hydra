@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Hydra Security Lab</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            background: #080d18;
+            color: white;
+        }
+
+        header {
+            background: #101827;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            color: #00ffcc;
+            margin: 0;
+        }
+
+        header a {
+            color: #00ffcc;
+            text-decoration: none;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            padding: 30px 20px;
+        }
+
+        .intro {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .intro h2 {
+            color: #00ffcc;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: #101827;
+            border: 1px solid #00ffcc33;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 0 15px #00ffcc11;
+        }
+
+        .card h2 {
+            color: #00ffcc;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 12px 0;
+            border: 1px solid #34445b;
+            border-radius: 6px;
+            background: #080d18;
+            color: white;
+        }
+
+        button {
+            padding: 11px 18px;
+            border: none;
+            border-radius: 6px;
+            background: #00ffcc;
+            color: #080d18;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: white;
+        }
+
+        .result {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        .tip {
+            color: #aab7c4;
+            line-height: 1.6;
+        }
+
+        .safe {
+            color: #00ff99;
+        }
+
+        .warning {
+            color: #ffd166;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>HYDRA</h1>
+
+    <a href="dashboard.html">
+        Back to Dashboard
+    </a>
+</header>
+
+<div class="container">
+
+    <div class="intro">
+        <h2>Cybersecurity Practice Lab 🔐</h2>
+        <p class="tip">
+            Practice basic cybersecurity concepts safely on your own computer.
+        </p>
+    </div>
+
+    <div class="cards">
+
+        <div class="card">
+            <h2>1. Password Strength Checker</h2>
+
+            <p class="tip">
+                Enter a sample password. Do not enter your real password.
+            </p>
+
+            <input
+                type="password"
+                id="passwordInput"
+                placeholder="Enter sample password"
+            >
+
+            <button onclick="checkPassword()">
+                Check Strength
+            </button>
+
+            <div id="passwordResult" class="result"></div>
+        </div>
+
+        <div class="card">
+            <h2>2. Phishing Awareness</h2>
+
+            <p>
+                You receive an email saying:
+            </p>
+
+            <p class="warning">
+                "Your account will be closed today. Click this unknown link immediately."
+            </p>
+
+            <button onclick="showPhishingAnswer()">
+                Is this suspicious?
+            </button>
+
+            <div id="phishingResult" class="result"></div>
+        </div>
+
+        <div class="card">
+            <h2>3. Security Tips</h2>
+
+            <ul class="tip">
+                <li>Use long and unique passwords.</li>
+                <li>Enable two-factor authentication.</li>
+                <li>Do not open unknown links.</li>
+                <li>Keep your software updated.</li>
+                <li>Never share OTPs or passwords.</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2>4. Learning Goal</h2>
+
+            <p class="tip">
+                Learn ethical hacking only on systems you own
+                or have permission to test.
+            </p>
+
+            <p class="safe">
+                Practice safely. Learn responsibly.
+            </p>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+    function checkPassword() {
+
+        const password =
+            document.getElementById("passwordInput").value;
+
+        const result =
+            document.getElementById("passwordResult");
+
+        if (password.length === 0) {
+            result.textContent = "Please enter a sample password.";
+            result.className = "result warning";
+            return;
+        }
+
+        let score = 0;
+
+        if (password.length >= 8) {
+            score++;
+        }
+
+        if (/[A-Z]/.test(password)) {
+            score++;
+        }
+
+        if (/[a-z]/.test(password)) {
+            score++;
+        }
+
+        if (/[0-9]/.test(password)) {
+            score++;
+        }
+
+        if (/[^A-Za-z0-9]/.test(password)) {
+            score++;
+        }
+
+        if (score <= 2) {
+            result.textContent = "Weak password. Use a longer password.";
+            result.className = "result warning";
+        } else if (score <= 4) {
+            result.textContent = "Medium password. Add more variety.";
+            result.className = "result warning";
+        } else {
+            result.textContent = "Strong sample password.";
+            result.className = "result safe";
+        }
+    }
+
+    function showPhishingAnswer() {
+
+        const result =
+            document.getElementById("phishingResult");
+
+        result.textContent =
+            "Yes. Urgent language and unknown links are common phishing warning signs.";
+
+        result.className = "result warning";
+    }
+</script>
+
+</body>
+</html>

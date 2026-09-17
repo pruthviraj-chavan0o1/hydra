@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Hydra Profile</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: #080d18;
+            color: white;
+        }
+
+        header {
+            background: #101827;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            color: #00ffcc;
+            margin: 0;
+            letter-spacing: 2px;
+        }
+
+        .back-button {
+            color: #00ffcc;
+            text-decoration: none;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            padding: 50px 20px;
+        }
+
+        .profile-card {
+            width: 400px;
+            background: #101827;
+            border: 1px solid #00ffcc44;
+            border-radius: 15px;
+            padding: 35px;
+            text-align: center;
+            box-shadow: 0 0 25px #00ffcc22;
+        }
+
+        .profile-icon {
+            width: 90px;
+            height: 90px;
+            margin: auto;
+            border-radius: 50%;
+            background: #00ffcc;
+            color: #080d18;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 40px;
+            font-weight: bold;
+        }
+
+        h2 {
+            color: #00ffcc;
+            margin-top: 20px;
+        }
+
+        .info {
+            background: #080d18;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 8px;
+            text-align: left;
+        }
+
+        .info p {
+            margin: 12px 0;
+        }
+
+        .label {
+            color: #aab7c4;
+        }
+
+        .value {
+            color: white;
+            font-weight: bold;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 25px;
+            border: none;
+            border-radius: 7px;
+            background: #ff3b3b;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #ff6666;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>HYDRA</h1>
+        <a class="back-button" href="dashboard.html">
+            Back to Dashboard
+        </a>
+    </header>
+
+    <div class="container">
+
+        <div class="profile-card">
+
+            <div class="profile-icon">
+                👤
+            </div>
+
+            <h2 id="profileUsername">User Profile</h2>
+
+            <p>Welcome to your Hydra profile.</p>
+
+            <div class="info">
+
+                <p>
+                    <span class="label">Username:</span>
+                    <span class="value" id="usernameValue">
+                        Loading...
+                    </span>
+                </p>
+
+                <p>
+                    <span class="label">Status:</span>
+                    <span class="value">Active</span>
+                </p>
+
+                <p>
+                    <span class="label">Platform:</span>
+                    <span class="value">Hydra</span>
+                </p>
+
+            </div>
+
+            <button onclick="logout()">
+                Logout
+            </button>
+
+        </div>
+
+    </div>
+
+    <script>
+        const username = localStorage.getItem("hydraUsername");
+
+        if (username) {
+            document.getElementById("profileUsername").textContent =
+                username + "'s Profile";
+
+            document.getElementById("usernameValue").textContent =
+                username;
+        } else {
+            document.getElementById("profileUsername").textContent =
+                "Guest Profile";
+
+            document.getElementById("usernameValue").textContent =
+                "Not available";
+        }
+
+        function logout() {
+            localStorage.removeItem("hydraUsername");
+            window.location.href = "login.html";
+        }
+    </script>
+
+</body>
+</html>

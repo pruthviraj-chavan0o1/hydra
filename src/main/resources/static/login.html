@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Hydra Login</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background:
+                radial-gradient(circle at top, #123047, #080d18 60%);
+            color: white;
+        }
+
+        .container {
+            width: 350px;
+            padding: 30px;
+            background: #101827;
+            border: 1px solid #00ffcc44;
+            border-radius: 15px;
+            box-shadow: 0 0 25px #00ffcc33;
+        }
+
+        h1 {
+            text-align: center;
+            color: #00ffcc;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #aab7c4;
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 6px;
+            color: #d9e4ec;
+            font-size: 14px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #34445b;
+            border-radius: 7px;
+            background: #080d18;
+            color: white;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #00ffcc;
+            box-shadow: 0 0 8px #00ffcc44;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 22px;
+            border: none;
+            border-radius: 7px;
+            background: #00ffcc;
+            color: #080d18;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: white;
+            transform: translateY(-2px);
+        }
+
+        button:disabled {
+            background: #668b84;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        p {
+            text-align: center;
+            color: #aab7c4;
+            font-size: 14px;
+        }
+
+        a {
+            color: #00ffcc;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        #message {
+            margin-top: 18px;
+            text-align: center;
+            font-weight: bold;
+            min-height: 20px;
+        }
+
+        .success {
+            color: #00ff99;
+        }
+
+        .error {
+            color: #ff6b6b;
+        }
+
+        .loading {
+            color: #ffd166;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>HYDRA LOGIN</h1>
+
+        <div class="subtitle">
+            Welcome back, security explorer
+        </div>
+
+        <form id="loginForm">
+
+            <label for="username">Username</label>
+
+            <input
+                type="text"
+                id="username"
+                placeholder="Enter username"
+                autocomplete="username"
+                required
+            >
+
+            <label for="password">Password</label>
+
+            <input
+                type="password"
+                id="password"
+                placeholder="Enter password"
+                autocomplete="current-password"
+                required
+            >
+
+            <button type="submit" id="loginButton">
+                Login
+            </button>
+
+        </form>
+
+        <p>
+            Don't have an account?
+            <a href="register.html">Register</a>
+        </p>
+
+        <p>
+            <a href="index.html">Back to Home</a>
+        </p>
+
+        <div id="message"></div>
+
+    </div>
+
+    <script>
+        const loginForm = document.getElementById("loginForm");
+        const loginButton = document.getElementById("loginButton");
+        const message = document.getElementById("message");
+
+        loginForm.addEventListener("submit", async function(event) {
+
+            event.preventDefault();
+
+            const username = document.getElementById("username").value.trim();
+            const password = document.getElementById("password").value;
+
+            message.textContent = "";
+            message.className = "";
+
+            loginButton.disabled = true;
+            loginButton.textContent = "Logging in...";
+            message.textContent = "Please wait...";
+            message.className = "loading";
+
+            try {
+
+                const response = await fetch("/api/login", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        username: username,
+                        password: password
+                    })
+                });
+
+                const result = await response.text();
+
+                if (result.includes("Login successful")) {
+                    localStorage.setItem("hydraUsername", username);
+
+                    message.textContent = "Login successful! Opening dashboard...";
+                    message.className = "success";
+
+                    setTimeout(function() {
+                        window.location.href = "dashboard.html";
+                    }, 1000);
+
+                } else {
+
+                    message.textContent = result;
+                    message.className = "error";
+
+                    loginButton.disabled = false;
+                    loginButton.textContent = "Login";
+                }
+
+            } catch (error) {
+
+                message.textContent =
+                    "Unable to connect to Hydra backend.";
+
+                message.className = "error";
+
+                loginButton.disabled = false;
+                loginButton.textContent = "Login";
+            }
+
+        });
+    </script>
+
+</body>
+</html>
