@@ -1,5 +1,6 @@
 package com.pruthviraj.hydra.controller;
 import java.util.List;
+import java.util.ArrayList;
 
 import com.pruthviraj.hydra.model.User;
 import com.pruthviraj.hydra.repository.UserRepository;
@@ -27,8 +28,25 @@ public class HydraController {
         return "HYDRA backend is working successfully!";
     }
     @GetMapping("/api/admin/users")
-public List<User> getAllUsers() {
-    return userRepository.findAll();
+public List<Map<String, Object>> getAllUsers() {
+
+    List<User> users = userRepository.findAll();
+
+    List<Map<String, Object>> safeUsers = new ArrayList<>();
+
+    for (User user : users) {
+
+        Map<String, Object> userData = new java.util.HashMap<>();
+
+        userData.put("id", user.getId());
+        userData.put("username", user.getUsername());
+        userData.put("email", user.getEmail());
+        userData.put("role", user.getRole());
+
+        safeUsers.add(userData);
+    }
+
+    return safeUsers;
 }
 
     @PostMapping("/api/register")
