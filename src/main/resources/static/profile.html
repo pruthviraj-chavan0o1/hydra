@@ -9,105 +9,130 @@
     <style>
         * {
             box-sizing: border-box;
-            font-family: Arial, sans-serif;
         }
 
         body {
             margin: 0;
             min-height: 100vh;
-            background: #080d18;
+            font-family: Arial, sans-serif;
+            background:
+                radial-gradient(circle at top, #123047, #080d18 65%);
             color: white;
         }
 
         header {
-            background: #101827;
-            padding: 20px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            background: #111827;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid #263244;
         }
 
         header h1 {
-            color: #00ffcc;
             margin: 0;
+            color: #00ffcc;
             letter-spacing: 2px;
         }
 
-        .back-button {
-            color: #00ffcc;
-            text-decoration: none;
-        }
-
         .container {
-            display: flex;
-            justify-content: center;
-            padding: 50px 20px;
+            width: 90%;
+            max-width: 600px;
+            margin: 40px auto;
         }
 
         .profile-card {
-            width: 400px;
             background: #101827;
-            border: 1px solid #00ffcc44;
+            padding: 30px;
             border-radius: 15px;
-            padding: 35px;
-            text-align: center;
+            border: 1px solid #00ffcc44;
             box-shadow: 0 0 25px #00ffcc22;
         }
 
-        .profile-icon {
-            width: 90px;
-            height: 90px;
-            margin: auto;
-            border-radius: 50%;
-            background: #00ffcc;
-            color: #080d18;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 40px;
-            font-weight: bold;
-        }
-
-        h2 {
+        .profile-card h2 {
+            text-align: center;
             color: #00ffcc;
-            margin-top: 20px;
+            margin-top: 0;
+            margin-bottom: 30px;
         }
 
-        .info {
-            background: #080d18;
-            padding: 15px;
-            margin-top: 20px;
+        .profile-item {
+            background: #1f2937;
+            padding: 16px;
             border-radius: 8px;
-            text-align: left;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            flex-wrap: wrap;
         }
 
-        .info p {
-            margin: 12px 0;
+        .profile-item strong {
+            color: #00ffcc;
         }
 
-        .label {
-            color: #aab7c4;
+        .profile-item span {
+            color: #ffffff;
+            overflow-wrap: anywhere;
         }
 
-        .value {
-            color: white;
+        .role-admin {
+            color: #ffd166 !important;
             font-weight: bold;
         }
 
-        button {
+        .role-user {
+            color: #00ff99 !important;
+            font-weight: bold;
+        }
+
+        .loading {
+            color: #ffd166;
+            text-align: center;
+        }
+
+        .error {
+            color: #ff6b6b;
+            text-align: center;
+        }
+
+        button,
+        .home-link {
+            display: block;
             width: 100%;
-            padding: 12px;
-            margin-top: 25px;
+            margin-top: 15px;
+            padding: 13px;
             border: none;
             border-radius: 7px;
-            background: #ff3b3b;
-            color: white;
+            background: #00ffcc;
+            color: #080d18;
             font-weight: bold;
+            text-align: center;
+            text-decoration: none;
             cursor: pointer;
+            transition: 0.3s;
         }
 
-        button:hover {
-            background: #ff6666;
+        button:hover,
+        .home-link:hover {
+            background: white;
+            transform: translateY(-2px);
+        }
+
+        .logout-button {
+            background: #ff6b6b;
+            color: #180808;
+        }
+
+        .logout-button:hover {
+            background: #ffaaaa;
+        }
+
+        .back-link {
+            background: #263244;
+            color: white;
+        }
+
+        .back-link:hover {
+            background: #34445b;
         }
     </style>
 </head>
@@ -115,74 +140,169 @@
 <body>
 
     <header>
-        <h1>HYDRA</h1>
-        <a class="back-button" href="dashboard.html">
-            Back to Dashboard
-        </a>
+        <h1>HYDRA PROFILE</h1>
     </header>
 
     <div class="container">
 
         <div class="profile-card">
 
-            <div class="profile-icon">
-                👤
+            <h2>User Profile</h2>
+
+            <p id="message" class="loading">
+                Loading profile...
+            </p>
+
+            <div id="profileData" style="display: none;">
+
+                <div class="profile-item">
+                    <strong>User ID:</strong>
+                    <span id="userId"></span>
+                </div>
+
+                <div class="profile-item">
+                    <strong>Username:</strong>
+                    <span id="username"></span>
+                </div>
+
+                <div class="profile-item">
+                    <strong>Email:</strong>
+                    <span id="email"></span>
+                </div>
+
+                <div class="profile-item">
+                    <strong>Role:</strong>
+                    <span id="role"></span>
+                </div>
+
             </div>
 
-            <h2 id="profileUsername">User Profile</h2>
+            <button onclick="loadProfile()">
+                Refresh Profile
+            </button>
 
-            <p>Welcome to your Hydra profile.</p>
-
-            <div class="info">
-
-                <p>
-                    <span class="label">Username:</span>
-                    <span class="value" id="usernameValue">
-                        Loading...
-                    </span>
-                </p>
-
-                <p>
-                    <span class="label">Status:</span>
-                    <span class="value">Active</span>
-                </p>
-
-                <p>
-                    <span class="label">Platform:</span>
-                    <span class="value">Hydra</span>
-                </p>
-
-            </div>
-
-            <button onclick="logout()">
+            <button
+                class="logout-button"
+                onclick="logout()">
                 Logout
             </button>
+
+            <a
+                class="home-link back-link"
+                href="dashboard.html">
+                Back to Dashboard
+            </a>
 
         </div>
 
     </div>
 
     <script>
-        const username = localStorage.getItem("hydraUsername");
+        async function loadProfile() {
 
-        if (username) {
-            document.getElementById("profileUsername").textContent =
-                username + "'s Profile";
+            const message =
+                document.getElementById("message");
 
-            document.getElementById("usernameValue").textContent =
-                username;
-        } else {
-            document.getElementById("profileUsername").textContent =
-                "Guest Profile";
+            const profileData =
+                document.getElementById("profileData");
 
-            document.getElementById("usernameValue").textContent =
-                "Not available";
+            const roleElement =
+                document.getElementById("role");
+
+            const loggedInUsername =
+                localStorage.getItem("hydraUsername");
+
+            if (!loggedInUsername) {
+
+                profileData.style.display = "none";
+                message.style.display = "block";
+                message.className = "error";
+
+                message.textContent =
+                    "No logged-in user found. Please login first.";
+
+                return;
+            }
+
+            message.style.display = "block";
+            message.className = "loading";
+            message.textContent = "Loading profile...";
+
+            profileData.style.display = "none";
+
+            try {
+
+                const response =
+                    await fetch("/api/users");
+
+                if (!response.ok) {
+                    throw new Error(
+                        "Unable to load users from backend."
+                    );
+                }
+
+                const users =
+                    await response.json();
+
+                const user =
+                    users.find(function(currentUser) {
+
+                        return currentUser.username ===
+                            loggedInUsername;
+
+                    });
+
+                if (!user) {
+                    throw new Error(
+                        "Logged-in user was not found."
+                    );
+                }
+
+                document.getElementById("userId")
+                    .textContent = user.id;
+
+                document.getElementById("username")
+                    .textContent = user.username;
+
+                document.getElementById("email")
+                    .textContent = user.email;
+
+                roleElement.textContent = user.role;
+
+                if (user.role === "ADMIN") {
+
+                    roleElement.className =
+                        "role-admin";
+
+                } else {
+
+                    roleElement.className =
+                        "role-user";
+                }
+
+                message.style.display = "none";
+                profileData.style.display = "block";
+
+            } catch (error) {
+
+                profileData.style.display = "none";
+                message.style.display = "block";
+                message.className = "error";
+
+                message.textContent =
+                    "Error loading profile: " +
+                    error.message;
+            }
         }
 
         function logout() {
+
             localStorage.removeItem("hydraUsername");
+
             window.location.href = "login.html";
         }
+
+        loadProfile();
     </script>
 
 </body>

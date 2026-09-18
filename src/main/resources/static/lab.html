@@ -4,102 +4,108 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Hydra Security Lab</title>
+    <title>Hydra Cybersecurity Lab</title>
 
     <style>
         * {
             box-sizing: border-box;
-            font-family: Arial, sans-serif;
         }
 
         body {
             margin: 0;
-            background: #080d18;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background:
+                radial-gradient(circle at top, #123047, #080d18 65%);
             color: white;
         }
 
         header {
             background: #101827;
-            padding: 20px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            padding: 22px;
+            text-align: center;
+            border-bottom: 1px solid #00ffcc44;
         }
 
         header h1 {
-            color: #00ffcc;
             margin: 0;
+            color: #00ffcc;
+            letter-spacing: 2px;
         }
 
-        header a {
-            color: #00ffcc;
-            text-decoration: none;
+        header p {
+            color: #aab7c4;
         }
 
         .container {
-            max-width: 1000px;
-            margin: auto;
-            padding: 30px 20px;
+            width: 90%;
+            max-width: 1100px;
+            margin: 35px auto;
         }
 
-        .intro {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .intro h2 {
-            color: #00ffcc;
-        }
-
-        .cards {
+        .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 22px;
         }
 
         .card {
             background: #101827;
-            border: 1px solid #00ffcc33;
-            border-radius: 12px;
+            border: 1px solid #263244;
+            border-radius: 14px;
             padding: 25px;
-            box-shadow: 0 0 15px #00ffcc11;
         }
 
         .card h2 {
             color: #00ffcc;
+            margin-top: 0;
+        }
+
+        label {
+            display: block;
+            margin: 15px 0 8px;
+            color: #d9e4ec;
         }
 
         input {
             width: 100%;
-            padding: 12px;
-            margin: 12px 0;
+            padding: 13px;
             border: 1px solid #34445b;
-            border-radius: 6px;
+            border-radius: 7px;
             background: #080d18;
             color: white;
+            outline: none;
         }
 
-        button {
-            padding: 11px 18px;
+        input:focus {
+            border-color: #00ffcc;
+        }
+
+        button,
+        .back-button {
+            display: inline-block;
+            margin-top: 18px;
+            padding: 12px 20px;
             border: none;
-            border-radius: 6px;
+            border-radius: 7px;
             background: #00ffcc;
             color: #080d18;
             font-weight: bold;
             cursor: pointer;
+            text-decoration: none;
         }
 
-        button:hover {
+        button:hover,
+        .back-button:hover {
             background: white;
         }
 
         .result {
-            margin-top: 15px;
-            font-weight: bold;
-        }
-
-        .tip {
-            color: #aab7c4;
+            margin-top: 18px;
+            padding: 15px;
+            border-radius: 8px;
+            background: #1f2937;
+            color: #d9e4ec;
             line-height: 1.6;
         }
 
@@ -110,157 +116,256 @@
         .warning {
             color: #ffd166;
         }
+
+        .danger {
+            color: #ff6b6b;
+        }
+
+        ul {
+            padding-left: 20px;
+            color: #cbd5e1;
+            line-height: 1.8;
+        }
+
+        .status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #00ff99;
+            font-weight: bold;
+        }
+
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            background: #00ff99;
+            border-radius: 50%;
+            box-shadow: 0 0 12px #00ff99;
+        }
+
+        .full-width {
+            margin-top: 22px;
+        }
+
+        @media (max-width: 750px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                width: 92%;
+            }
+        }
     </style>
 </head>
 
 <body>
 
-<header>
-    <h1>HYDRA</h1>
+    <header>
+        <h1>HYDRA CYBERSECURITY LAB</h1>
+        <p>Learn security. Test safely. Stay protected.</p>
+    </header>
 
-    <a href="dashboard.html">
-        Back to Dashboard
-    </a>
-</header>
+    <main class="container">
 
-<div class="container">
+        <div class="grid">
 
-    <div class="intro">
-        <h2>Cybersecurity Practice Lab 🔐</h2>
-        <p class="tip">
-            Practice basic cybersecurity concepts safely on your own computer.
-        </p>
-    </div>
+            <section class="card">
 
-    <div class="cards">
+                <h2>Password Strength Checker</h2>
 
-        <div class="card">
-            <h2>1. Password Strength Checker</h2>
+                <label for="passwordInput">
+                    Enter a sample password
+                </label>
 
-            <p class="tip">
-                Enter a sample password. Do not enter your real password.
-            </p>
+                <input
+                    type="password"
+                    id="passwordInput"
+                    placeholder="Enter sample password"
+                >
 
-            <input
-                type="password"
-                id="passwordInput"
-                placeholder="Enter sample password"
-            >
+                <button onclick="checkPassword()">
+                    Check Strength
+                </button>
 
-            <button onclick="checkPassword()">
-                Check Strength
-            </button>
+                <div id="passwordResult" class="result">
+                    Result will appear here.
+                </div>
 
-            <div id="passwordResult" class="result"></div>
+            </section>
+
+            <section class="card">
+
+                <h2>URL Safety Checker</h2>
+
+                <label for="urlInput">
+                    Enter a website URL
+                </label>
+
+                <input
+                    type="text"
+                    id="urlInput"
+                    placeholder="https://example.com"
+                >
+
+                <button onclick="checkUrl()">
+                    Check URL
+                </button>
+
+                <div id="urlResult" class="result">
+                    Result will appear here.
+                </div>
+
+            </section>
+
         </div>
 
-        <div class="card">
-            <h2>2. Phishing Awareness</h2>
+        <section class="card full-width">
+
+            <h2>Security Status</h2>
+
+            <div class="status">
+                <div class="status-dot"></div>
+                Hydra Lab is running locally
+            </div>
 
             <p>
-                You receive an email saying:
+                These tools are educational. They do not guarantee
+                that a password or website is completely safe.
             </p>
 
-            <p class="warning">
-                "Your account will be closed today. Click this unknown link immediately."
-            </p>
+        </section>
 
-            <button onclick="showPhishingAnswer()">
-                Is this suspicious?
-            </button>
+        <section class="card full-width">
 
-            <div id="phishingResult" class="result"></div>
-        </div>
+            <h2>Cybersecurity Tips</h2>
 
-        <div class="card">
-            <h2>3. Security Tips</h2>
-
-            <ul class="tip">
-                <li>Use long and unique passwords.</li>
-                <li>Enable two-factor authentication.</li>
-                <li>Do not open unknown links.</li>
-                <li>Keep your software updated.</li>
-                <li>Never share OTPs or passwords.</li>
+            <ul>
+                <li>Use a different password for every account.</li>
+                <li>Use long passwords with letters, numbers and symbols.</li>
+                <li>Enable two-factor authentication whenever possible.</li>
+                <li>Do not open unknown links or suspicious attachments.</li>
+                <li>Check the website address before entering credentials.</li>
+                <li>Never share passwords or OTPs with anyone.</li>
+                <li>Keep your operating system and applications updated.</li>
             </ul>
-        </div>
 
-        <div class="card">
-            <h2>4. Learning Goal</h2>
+        </section>
 
-            <p class="tip">
-                Learn ethical hacking only on systems you own
-                or have permission to test.
-            </p>
+        <a
+            href="dashboard.html"
+            class="back-button">
+            Back to Dashboard
+        </a>
 
-            <p class="safe">
-                Practice safely. Learn responsibly.
-            </p>
-        </div>
+    </main>
 
-    </div>
+    <script>
+        function checkPassword() {
 
-</div>
+            const password =
+                document.getElementById("passwordInput").value;
 
-<script>
-    function checkPassword() {
+            const result =
+                document.getElementById("passwordResult");
 
-        const password =
-            document.getElementById("passwordInput").value;
+            if (password.length === 0) {
 
-        const result =
-            document.getElementById("passwordResult");
+                result.className = "result danger";
+                result.textContent =
+                    "Please enter a sample password.";
 
-        if (password.length === 0) {
-            result.textContent = "Please enter a sample password.";
-            result.className = "result warning";
-            return;
+                return;
+            }
+
+            let score = 0;
+
+            if (password.length >= 8) {
+                score++;
+            }
+
+            if (/[A-Z]/.test(password)) {
+                score++;
+            }
+
+            if (/[a-z]/.test(password)) {
+                score++;
+            }
+
+            if (/[0-9]/.test(password)) {
+                score++;
+            }
+
+            if (/[^A-Za-z0-9]/.test(password)) {
+                score++;
+            }
+
+            if (score <= 2) {
+
+                result.className = "result danger";
+                result.textContent =
+                    "Weak password. Use at least 8-12 characters, " +
+                    "uppercase, lowercase, numbers and symbols.";
+
+            } else if (score <= 4) {
+
+                result.className = "result warning";
+                result.textContent =
+                    "Medium password. Make it longer and more unique.";
+
+            } else {
+
+                result.className = "result safe";
+                result.textContent =
+                    "Strong password pattern. Never reuse it " +
+                    "on multiple websites.";
+            }
         }
 
-        let score = 0;
+        function checkUrl() {
 
-        if (password.length >= 8) {
-            score++;
+            const url =
+                document.getElementById("urlInput").value.trim();
+
+            const result =
+                document.getElementById("urlResult");
+
+            if (url.length === 0) {
+
+                result.className = "result danger";
+                result.textContent =
+                    "Please enter a URL.";
+
+                return;
+            }
+
+            try {
+
+                const parsedUrl = new URL(url);
+
+                if (parsedUrl.protocol !== "https:") {
+
+                    result.className = "result warning";
+                    result.textContent =
+                        "Warning: This URL is not using HTTPS. " +
+                        "Do not enter sensitive information.";
+
+                    return;
+                }
+
+                result.className = "result safe";
+                result.textContent =
+                    "The URL uses HTTPS. Still verify the domain " +
+                    "and do not trust unknown websites automatically.";
+
+            } catch (error) {
+
+                result.className = "result danger";
+                result.textContent =
+                    "Invalid URL format. Example: https://example.com";
+            }
         }
-
-        if (/[A-Z]/.test(password)) {
-            score++;
-        }
-
-        if (/[a-z]/.test(password)) {
-            score++;
-        }
-
-        if (/[0-9]/.test(password)) {
-            score++;
-        }
-
-        if (/[^A-Za-z0-9]/.test(password)) {
-            score++;
-        }
-
-        if (score <= 2) {
-            result.textContent = "Weak password. Use a longer password.";
-            result.className = "result warning";
-        } else if (score <= 4) {
-            result.textContent = "Medium password. Add more variety.";
-            result.className = "result warning";
-        } else {
-            result.textContent = "Strong sample password.";
-            result.className = "result safe";
-        }
-    }
-
-    function showPhishingAnswer() {
-
-        const result =
-            document.getElementById("phishingResult");
-
-        result.textContent =
-            "Yes. Urgent language and unknown links are common phishing warning signs.";
-
-        result.className = "result warning";
-    }
-</script>
+    </script>
 
 </body>
 </html>
