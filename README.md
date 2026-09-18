@@ -175,3 +175,21 @@ Future improvements may include:
 Hydra is an educational cybersecurity project.
 
 Use cybersecurity tools only on systems and websites that you own or have explicit permission to test.
+
+## 📸 Screenshots
+
+### 🏠 Home Page
+
+![Hydra Home Page](screenshots/home.png)
+
+### 🔐 Login Page
+
+![Hydra Login Page](screenshots/login.png)
+
+### 📊 Dashboard
+
+![Hydra Dashboard](screenshots/dashboard.png)
+
+### 🧪 Cybersecurity Lab
+
+![Hydra Cybersecurity Lab](screenshots/lab.png)
